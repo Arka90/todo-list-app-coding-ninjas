@@ -5,10 +5,18 @@ const noTask = document.querySelectorAll('#tasks-counter');
 const noTaskRemain = document.querySelector('#tasks-remaining');
 
 let tasks = [];
+
+//Adding tasks
 function addTask() {
+  //Read the value of input and storing it in a variable text
   const text = input.value;
+
+  //if the user enter blank text then this function will return immidiaely
   if (!text) return;
+
+  //clearing the input field
   input.value = '';
+
   const task = {
     text: text,
     id: Date.now(),
@@ -16,12 +24,14 @@ function addTask() {
   };
 
   tasks.push(task);
+
   renderTask(tasks);
   noTask.forEach((el) => {
     el.innerHTML = tasks.length;
   });
 }
 
+// Marking the task as checked and unchecked
 function markTaskAsComplete(taskId) {
   tasks.forEach((task) => {
     if (task.id == taskId) {
@@ -33,6 +43,7 @@ function markTaskAsComplete(taskId) {
   });
 }
 
+//Removing a particular task using it's id
 function removeTask(taskId) {
   const newTask = tasks.filter((el) => el.id != taskId);
   tasks = newTask;
@@ -43,6 +54,7 @@ function removeTask(taskId) {
   taskCompleted();
 }
 
+//rendering task list in the page
 function renderTask(tasks) {
   list.innerHTML = '';
 
@@ -61,6 +73,7 @@ function renderTask(tasks) {
   });
 }
 
+// tells out of how many tasks have been left and done
 function taskCompleted() {
   let completed = 0;
 
@@ -73,11 +86,13 @@ function taskCompleted() {
   noTaskRemain.textContent = completed;
 }
 
-window.addEventListener('keyup', (e) => {
+// Listing event for task submission
+input.addEventListener('keyup', (e) => {
   if (e.key === 'Enter') addTask();
   return;
 });
 
+// for delete and checking
 window.addEventListener('click', (e) => {
   const target = e.target;
 
